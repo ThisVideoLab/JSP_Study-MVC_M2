@@ -34,9 +34,6 @@ public class MVCBoardDAO extends DBConnPool {
 		return totalCount; 
 	}
 	
-	
-	
-	
 	//검색 조건에 맞는 게시물 목록을 반환합니다.
 		//DataBase에서 Select 한 결과 값을  DTO에 담아서 리턴 시켜줌.  
     public List<MVCBoardDTO> selectListPage(Map<String,Object> map) {
@@ -143,7 +140,20 @@ public class MVCBoardDAO extends DBConnPool {
     	}    	
     }
     
-    
+    // 총 게시물 수 계산 
+    public void totalCount(String idx) {
+    	String query = "select count(idx) from mvcboard;"; 
+    	
+    	try {
+    		psmt = con.prepareStatement(query); 
+    		psmt.setString (1, idx); 
+    		psmt.executeQuery(); 
+    		
+    	}catch (Exception e) {
+    		e.printStackTrace();
+    		System.out.println("게시물 조회수 증가시 예외 발생");
+    	}    	
+    }
     
     
     
@@ -226,24 +236,6 @@ public class MVCBoardDAO extends DBConnPool {
 		}
 				
 		return result; 				
-	}
-	
-	
-	
-	//다운 로드 횟수를 증가시키는 메소드 
-	public void downCountPlus (String idx) {
-		String query = "UPDATE mvcboard SET downcount = downcount + 1 "
-					   + " WHERE idx = ?"; 
-		
-		try {
-			psmt = con.prepareStatement(query); 
-			psmt.setString(1, idx);
-			psmt.executeUpdate();
-			
-		}catch (Exception e) {
-			e.printStackTrace();
-			System.out.println("다운로드 횟수 증가시 오류 발생");
-		}
 	}
 	
 	// 비밀번호를 확인 하는 메소드 (입력한 비밀 번호가 DataBase 의 값과 일치하는지 확인 

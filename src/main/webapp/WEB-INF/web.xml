@@ -5,7 +5,7 @@
 		주의 : 한 나라도 xml 문법에 맞지 않으면 톰켓 서비스가 자동되지 않는다.
 		web.xml 에서 설정을 잡으면 jsp 페이지 각각에서 셋팅하지 않아도 된다.  
 		 -->
-  <display-name>MVC_M2</display-name>
+  <display-name>MVC_M2_2</display-name>
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
     <welcome-file>index.jsp</welcome-file>
@@ -37,12 +37,12 @@
   	<param-value>1234</param-value>
   </context-param>
   
-  <!--  세션 유지 기간 설정 (20분동안 세션 유지, 기본값은 20초라고 하심)  -->
+  <!--  세션 유지 기간 설정 (20분동안 세션 유지  -->
   <session-config>
   	<session-timeout>20</session-timeout>
   </session-config>
   
-  <!-- 한글 깨짐 방지를 위한 설정 (이 프로젝트의 모든 페이지에 대한 일반 설정)  -->
+  <!-- 한글 깨짐 방지를 위한 설정 (이 프로젝트의 모든 페이지에 대해서 설정)  -->
   <filter>
   	<filter-name>SetCharEncoding</filter-name>
   	<filter-class>org.apache.catalina.filters.SetCharacterEncodingFilter</filter-class>
@@ -53,55 +53,73 @@
   </filter>
   <filter-mapping>
   	<filter-name>SetCharEncoding</filter-name>
-  	<url-pattern>/*</url-pattern> <!-- /*는 모든 요청에 대한 처리를 의미함 -->
+  	<url-pattern>/*</url-pattern>
   </filter-mapping>
   
-  <!-- 서블릿 (servlet) : *.java  ==> html 로 출력 하는 자바를 서블릿이라고 부름 
-  		   : 요즘은 서블릿을 controller라고해서 기능을 때려박아 둠 -->
+  <!-- 서블릿 (servlet) : *.java  ==> html 로 출력 하는 자바를 서블릿 
+  		   : 요즘은 서블릿을 controller  
+  서블릿(Controller) 매핑 설정 :  -->
   
-    <!-- 서블릿(Controller) 매핑 설정 -->  
+  <!-- 서블릿 Controller 매핑 설정  -->
+  <servlet>
+  	<servlet-name>myController</servlet-name>
+  	<servlet-class>com.controller.Mycontroller</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>myController</servlet-name>
+  	<url-pattern>/mvc_test/my.do</url-pattern>
+  </servlet-mapping>
   
+  <!-- MVCBoard 글목록 보기 Controller 매핑  -->
   <servlet>
   	<servlet-name>MVCBoardList</servlet-name>
   	<servlet-class>model2.mvcboard.ListController</servlet-class>
   </servlet>
   <servlet-mapping>
   	<servlet-name>MVCBoardList</servlet-name>
-  	<url-pattern>/MVC_M2/list.do</url-pattern>
+  	<url-pattern>/mvcboard/list.do</url-pattern>
   </servlet-mapping>
   
-  <!-- 서블릿 Controller 매핑 설정  -->
+    <!-- MVCBoard 글내용 보기 Controller 매핑  -->
+    <!--   어노테이션 @WebSerlet ("/mvcboard/view.do") 
   <servlet>
-  	<servlet-name>myController</servlet-name> <!-- 3. 서블릿이 호출당하면 서블릿내 클래스인 4번을 실행함 -->
-  	<servlet-class>com.controller.Mycontroller</servlet-class> <!-- com.controller 패키지 내의 Mycontroller 실행-->
+  	<servlet-name>MVCBoardView</servlet-name>
+  	<servlet-class>model2.mvcboard.ViewController</servlet-class>
   </servlet>
   <servlet-mapping>
-  	<servlet-name>myController</servlet-name> <!--2. 서블릿 네임인 myController과 일치하는 이름의 서블릿 myController인 3번 실행  -->
-  	<url-pattern>/mvc_test/my.do</url-pattern> <!--1. my.do로 요청이 들어오면 이것을 서블릿 네임인 2번을 바라봄 -->
-  	<!-- 
-  	<url-pattern>/MVC_M2/mvc_test/my.do</url-pattern>
-  	 -->
+  	<servlet-name>MVCBoardView</servlet-name>
+  	<url-pattern>/mvcboard/view.do</url-pattern>
   </servlet-mapping>
+  -->
+   
+  <!-- MVCBoard 글 수정/삭제  Controller 매핑  -->
+  <!--  @WebServlet("/mvcboard/pass.do")
+  <servlet>
+  	<servlet-name>MVCBoardPass</servlet-name>
+  	<servlet-class>model2.mvcboard.PassController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>MVCBoardPass</servlet-name>
+  	<url-pattern>/mvcboard/pass.do</url-pattern>
+  </servlet-mapping>
+  -->
   
+    
+  <!-- 페이징 처리를 위한 설정 (변수값 할당) 출력레코드수:10개, 페이지수 : 5 -->
+  <context-param>
+  	<param-name>POSTS_PER_PAGE</param-name>
+  	<param-value>2</param-value> 
+  </context-param>
   
+  <context-param>
+  	<param-name>PAGES_PER_BLOCK</param-name>
+  	<param-value>2</param-value> 
+  </context-param>
   
+  <!-- 첨부 파일의 최대 용량 설정 (1Mbyte)  -->
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <context-param>
+  	<param-name>maxPostSize</param-name>
+  	<param-value>1024000</param-value> 
+  </context-param>
 </web-app>

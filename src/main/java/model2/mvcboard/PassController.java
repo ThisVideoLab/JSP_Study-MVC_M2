@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 import utils.JSFunction;
 
 
@@ -65,7 +66,8 @@ public class PassController extends HttpServlet {
 			
 		}else  {	//비밀 번호가 일치하지 않을때  (Java Script실행서 이전페이지로 돌아가도록 
 				//이전 페이지로 이동 (JavaScript) 
-			JSFunction.alertBack(resp, "비밀번호 검증에 실패했습니다"); 
+			JSFunction.alertLocation(resp, "비밀번호가 틀렸습니다",
+					"../mvcboard/pass.do?mode=edit&idx=" + idx); 	
 		}
 		
 		

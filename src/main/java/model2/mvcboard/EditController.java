@@ -23,7 +23,7 @@ public class EditController extends HttpServlet{
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		//비밀 번호 검증후 검증이 완료 되면 idx 에 해당하는 레코드를 dto에 담어서 Edit.jsp 
+		//비밀 번호 검증후 검증이 완료 되면 idx 에 해당하는 레코드를 dto에 담아 Edit.jsp로 넘김
 		//Get방식으로 요청을 받아서 클라이언트가 넘기는 변수를 할당 받아서 뷰 페이지로 넘김. 
 		String idx = req.getParameter("idx");
 		MVCBoardDAO dao = new MVCBoardDAO (); 
@@ -43,11 +43,11 @@ public class EditController extends HttpServlet{
 		
 		// 1. 파일 업로드 처리 
 			//업로드 디렉토리의 물리적인 경로를 확인 해야 한다.  (서버의 파일을 업로드할 물리적인 절대경로 )
-		String saveDirectory = req.getServletContext().getRealPath("/Uploads"); 
+		String saveDirectory = req.getServletContext().getRealPath("/Uploads"); // Webapp 밑 uploads 밑에 저장 
 		
-			//업로드 할 파일의 최대 용량 확인 (web.xml 의 설정을 가져옴: 1MB) 
+		//업로드 할 파일의 최대 용량 확인 (web.xml 의 설정을 가져옴: 1MB) 
 		ServletContext application = this.getServletContext();
-		int maxPostSize = Integer.parseInt(application.getInitParameter("maxPostSize"));
+		int maxPostSize = Integer.parseInt(application.getInitParameter("maxPostSize")); // web.xml에서 일괄 지정
 		
 		//파일 업로드  <<나중에 처리 >> 
 		MultipartRequest mr = FileUtil.uploadFile(req, saveDirectory, maxPostSize); 
@@ -57,7 +57,6 @@ public class EditController extends HttpServlet{
 			JSFunction.alertBack(resp, "첨부 파일 용량이 초과 되었습니다. "); 
 			return; 
 		}
-		
 		
 		
 		//2. 파일 업로드 외 처리 ========================================
@@ -84,15 +83,13 @@ public class EditController extends HttpServlet{
 		dto.setContent(content); 
 		dto.setPass(pass); 
 		
-		/*
+		
 		System.out.println("=======DTO 객제에 저장된 값 불러오기 ==========");
 		System.out.println(dto.getIdx());
 		System.out.println(dto.getName());
 		System.out.println(dto.getTitle());
 		System.out.println(dto.getContent());
 		System.out.println(dto.getPass());
-		
-		*/ 
 		
 		//dto 객체의 Ofile, Sfile 은 업로드 경로에 해당 파일명이 존재하는 경우 처리 
 		
@@ -109,8 +106,8 @@ public class EditController extends HttpServlet{
 			System.out.println("newFileName" + newFileName);
 			
 			//파일명 변경 
-			File oldFile = new File (saveDirectory + File.separator + fileName); 
-			File newFile = new File (saveDirectory + File.separator + newFileName); 
+			File oldFile = new File (saveDirectory + File.separator + fileName);  // File.separator 는 그냥 파일구분자임 
+			File newFile = new File (saveDirectory + File.separator + newFileName); // 파일위치/파일이름 (ex: temp/test.txt) 
 			
 			oldFile.renameTo(newFile); 
 			
@@ -127,9 +124,6 @@ public class EditController extends HttpServlet{
 			dto.setSfile(prevSfile); 		
 		}
 		
-		
-		
-		
 		//DB에 수정 내용을 반영.  (DTO 의 저장된 값을 DAO의 메소드의 매개변수로 전달 ) 
 		MVCBoardDAO dao = new MVCBoardDAO(); 
 		int result = dao.updatePost(dto);       
@@ -142,21 +136,8 @@ public class EditController extends HttpServlet{
 			resp.sendRedirect("../mvcboard/view.do?idx=" + idx ); 
 			
 		} else {			//실패
-			JSFunction.alertLocation(resp, "비밀번호 검증을 다시 진행해 주세요",
-					"../mvcboard/view.do?idx=" + idx); 			
-			
+			JSFunction.alertLocation(resp, "비밀번호가 틀렸습니다",
+					"../mvcboard/pass.do?mode=edit&idx=" + idx); 			
 		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 	}
-	
-
 }

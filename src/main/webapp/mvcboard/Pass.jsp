@@ -37,6 +37,7 @@
 			<td colspan = "2" align = "center"> 
 				<button type = "submit" > 검증하기 </button>
 				<button type = "reset" > RESET </button>
+				<input type="button" value="돌아가기" onClick="history.go(-1)"/>    
 				<button type = "button" onclick = "location.href = '../mvcboard/list.do';">
 					목록 바로가기
 				</button>

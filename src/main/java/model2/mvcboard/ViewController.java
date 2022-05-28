@@ -34,16 +34,6 @@ public class ViewController extends HttpServlet {
 		//게시물 (dto) 객체를 view페이지로 전달하기 변수 값 저장 
 		req.setAttribute("dto", dto); 
 		req.getRequestDispatcher("/mvcboard/View.jsp").forward(req, resp); 
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 	}
 
 	@Override

@@ -42,7 +42,9 @@ public class FileUtil {
 			String directory, String filename) {
 		//매개변수 directory 에 인자의 서버의 업로드 폴더의 절대경로 
 		String sDirectory = req.getServletContext().getRealPath(directory); 
-		File file = new File (sDirectory + File.separator + filename); 
+		File file = new File (sDirectory + File.separator + filename); // File.separator 는 파일 구분자를 리턴하는 코드
+		// 위 코드 대로라면 파일위치/파일이름 (ex: temp/test.txt) 형식의 값이 출력됨.
+		
 		if (file.exists()) {
 			file.delete(); 
 		}
@@ -51,7 +53,7 @@ public class FileUtil {
 	//파일 다운로드 처리 메소드 : 명시한 파일을 찾아 다운로드 합니다. 
 	public static void download (HttpServletRequest req, HttpServletResponse resp, 
 			String directory , String sfileName, String ofileName) {
-		//upload 폴더의 서버의 물리적으 절대경로 저장
+		//upload 폴더의 서버의 물리적인 절대경로 저장
 		String sDirectory = req.getServletContext().getRealPath(directory); 
 		
 		 try {

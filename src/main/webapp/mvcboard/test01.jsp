@@ -10,7 +10,5 @@
 
 <%= request.getServletContext().getRealPath("/Uploads") %>
 
-
-
 </body>
 </html>

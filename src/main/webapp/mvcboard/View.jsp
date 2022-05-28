@@ -56,10 +56,16 @@
 	
 	<!--  하단 메뉴 버튼  -->
 	<tr>
-		<td colspan = "4" align ="center"> 
+		<td colspan = "4" align ="center">
+			<c:if test="${param.idx > 1}">
+			<button type = "button" onclick = "location.href='../mvcboard/view.do?idx=${param.idx-1}';">이전글</button>	
+			</c:if> 
 			<button type ="button" onclick = "location.href='../mvcboard/pass.do?mode=edit&idx=${param.idx}';">수정하기</button>
 			<button type = "button" onclick = "location.href='../mvcboard/pass.do?mode=delete&idx=${param.idx }';">삭제하기</button>
-			<button type = "button" onclick = "location.href='../mvcboard/list.do';">목록 바로가기</button>					
+			
+			<!-- 다음글 버튼 조건부 추가하고 싶은데 문법을 모르겠다  코드는 일단 오류나서 지움-->
+			
+			<button type = "button" onclick = "location.href='../mvcboard/list.do';">목록 바로가기</button>
 		</td> 	
 	</tr>
 	
